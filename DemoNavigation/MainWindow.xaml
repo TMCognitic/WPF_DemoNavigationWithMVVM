@@ -1,0 +1,34 @@
+﻿<Window x:Class="DemoNavigation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:DemoNavigation.ViewModels;assembly=DemoNavigation.ViewModels"
+        xmlns:uc="clr-namespace:DemoNavigation.Controls"
+        xmlns:local="clr-namespace:DemoNavigation"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" DataContext="{DynamicResource Main}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*" />
+            <ColumnDefinition Width="75*" />
+        </Grid.ColumnDefinitions>
+        <ItemsControl ItemsSource="{Binding ViewModels}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{Binding Title, Mode=OneTime}" Margin="5" Command="{Binding ChangeContentCommand, Source={StaticResource Main}}" CommandParameter="{Binding}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>            
+        </ItemsControl>
+        <ContentControl Grid.Column="2" Content="{Binding SelectedViewModel}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type vm:ViewModel1}">
+                    <uc:UserControl1 />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:ViewModel2}" >
+                    <uc:UserControl2 />
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
+    </Grid>
+</Window>
